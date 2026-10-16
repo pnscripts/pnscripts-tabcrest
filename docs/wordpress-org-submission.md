@@ -8,8 +8,7 @@ Form: https://wordpress.org/plugins/developers/add/ (log in first; the account n
 
 1. Create or pick the WordPress.org account that will own the plugin and turn on two-factor authentication.
 2. Put that account's username in `readme.txt` → `Contributors:` (it says `pnscripts`, and no WordPress.org profile `pnscripts` exists on 2026-10-05). Commit, then rebuild the zip.
-3. Build the zip: `bin/build-zip.sh` → `build/pnscripts-tabcrest-1.0.4.zip`
-   (absolute: `/media/petar/c8fc2986-4b79-4d7b-9a8c-e6db653915ac/DEV/Projects/pnscripts/marketplace/woocommerce-product-tabs/build/pnscripts-tabcrest-1.0.4.zip`).
+3. Build the zip: `bin/build-zip.sh` → `build/pnscripts-tabcrest-1.0.4.zip`.
    Check that the header `Version` and readme `Stable tag` match (the script does not compare them).
 4. Plugin Check 2.1.0 on WordPress 7.1.2 + WooCommerce 11.1.2 with that zip installed: `wp plugin check pnscripts-tabcrest --include-experimental --include-low-severity-errors --include-low-severity-warnings` must print "No errors found" (it did on 2026-10-10 for 1.0.4).
 5. The name in `Plugin Name:` and in the readme's `=== … ===` line must be identical and must not contain restricted terms such as "WooCommerce" or "WordPress" (the form rejected "PN Product Tabs for WooCommerce" on 2026-10-05; the review of a sibling plugin on 2026-10-06 also asked for a distinctive term at the start, so the name starts with "PN Scripts Tabcrest", not with a generic term such as "Product Tabs"). "WooCommerce" in the description, tags and body text is fine.
