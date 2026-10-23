@@ -134,7 +134,6 @@ final class Plugin {
 	 * Register hooks.
 	 */
 	private function register(): void {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'update_option_' . Settings::OPTION, array( $this->settings, 'flush' ) );
 
 		$this->globals->register();
@@ -157,22 +156,6 @@ final class Plugin {
 	}
 
 	/**
-	 * Bundled translations (bg_BG, de_DE, pl_PL) are used only when no language pack from
-	 * translate.wordpress.org is installed, so community translations always win.
-	 */
-	public function load_textdomain(): void {
-		$locale   = determine_locale();
-		$official = WP_LANG_DIR . '/plugins/pnscripts-tabcrest-' . $locale;
-		if ( is_readable( $official . '.mo' ) || is_readable( $official . '.l10n.php' ) ) {
-			return;
-		}
-		$bundled = PNSCRIPTS_PRODUCT_TABS_DIR . 'languages/pnscripts-tabcrest-' . $locale . '.mo';
-		if ( is_readable( $bundled ) ) {
-			load_textdomain( 'pnscripts-tabcrest', $bundled, $locale );
-		}
-	}
-
-	/**
 	 * Active licence implementation (free no-op unless an add-on provides one).
 	 */
 	public function license(): LicenseInterface {
@@ -188,14 +171,19 @@ final class Plugin {
 	}
 
 	/**
-	 * Admin notice when WooCommerce is missing or too old.
+	 * Admin notice when WooCommerce is too old (WordPress itself blocks activation without it).
 	 */
 	public static function missing_woocommerce_notice(): void {
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
+		// Only on the Plugins screen, where the dependency is managed.
+		$screen = get_current_screen();
+		if ( null === $screen || 'plugins' !== $screen->id ) {
+			return;
+		}
 		printf(
-			'<div class="notice notice-error"><p>%s</p></div>',
+			'<div class="notice notice-error is-dismissible"><p>%s</p></div>',
 			esc_html(
 				sprintf(
 					/* translators: %s: minimum WooCommerce version */

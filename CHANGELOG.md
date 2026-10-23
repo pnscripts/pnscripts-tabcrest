@@ -10,6 +10,12 @@ Before the first WordPress.org submission (owner):
 - Submit the zip from `bin/build-zip.sh` and request the slug `pnscripts-tabcrest` (WordPress.org derives `pn-scripts-tabcrest-custom-product-tabs-faq` from the plugin name otherwise; the slug can only be changed before approval).
 - After approval: upload `assets/screenshots/*.png` (and a banner/icon) to the SVN `assets/` folder.
 
+## [1.0.5] - 2026-10-23
+
+### Changed
+- WordPress.org review (17.10, Guideline 11 and translation files): `.po`, `.mo` and `.l10n.php` files are no longer in the package (`.pot` stays; language packs come from translate.wordpress.org) and the bundled-translation loader is removed.
+- The YIKES import notice shows only on the plugin's Global tabs screen and is dismissible per user (close button or link); the WooCommerce version notice shows only on the Plugins screen and is dismissible.
+
 ## [1.0.4] - 2026-10-10
 
 ### Changed

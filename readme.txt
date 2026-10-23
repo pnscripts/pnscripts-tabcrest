@@ -4,7 +4,7 @@ Tags: product tabs, woocommerce tabs, custom tabs, faq, tab manager
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,7 +56,7 @@ The importer copies every product's YIKES tabs and the YIKES saved tabs in one c
 
 * Compatible with High-Performance Order Storage (HPOS) and the cart and checkout blocks (the plugin never touches orders, cart or checkout).
 * Fast: tabs are stored with the product and global tabs are read from one cached index, so product pages do not run a query per tab. Styles load only when a FAQ tab is shown; no JavaScript on the storefront.
-* Translation-ready, with Bulgarian, German and Polish included.
+* Translation-ready; translations come from translate.wordpress.org.
 * Clean uninstall: data is kept by default; one setting removes all tabs and settings when the plugin is deleted.
 * No tracking, no external requests, no ads in the admin.
 
@@ -117,6 +117,10 @@ Not yet. The free plugin is complete and will stay complete; a later add-on may 
 
 == Changelog ==
 
+= 1.0.5 =
+* Translations are no longer bundled; language packs come from translate.wordpress.org.
+* The YIKES import notice appears only on the Global tabs screen and can be closed for good; the WooCommerce version notice appears only on the Plugins screen and is dismissible.
+
 = 1.0.4 =
 * Renamed to PN Scripts Tabcrest – Custom Product Tabs & FAQ; slug and text domain are now `pnscripts-tabcrest`. The WP-CLI command is `wp pnscripts-tabcrest` (the 1.0.x `wp pnscripts-product-tabs` still works) and the settings page address is `page=pnscripts-tabcrest` (1.0.x links are redirected). Tabs, settings and imports are kept.
 
@@ -134,6 +138,9 @@ Not yet. The free plugin is complete and will stay complete; a later add-on may 
 * First release: per-product and global tabs, FAQ tabs with FAQPage schema, default tab manager, classic and block theme support, YIKES Custom Product Tabs importer (dry run, batches, re-runnable, undo), WP-CLI commands, Bulgarian, German and Polish translations.
 
 == Upgrade Notice ==
+
+= 1.0.5 =
+WordPress.org review fixes: no bundled translation files, admin notices limited to the plugin's own screens.
 
 = 1.0.4 =
 New name and slug (pnscripts-tabcrest). Tabs and settings are kept. If you installed 1.0.x from GitHub, activate the plugin again after replacing the folder.

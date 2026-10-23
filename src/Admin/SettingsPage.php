@@ -395,14 +395,15 @@ final class SettingsPage {
 	}
 
 	/**
-	 * Notice when YIKES data is present and was never imported (dismissible per user).
+	 * Notice when YIKES data is present and was never imported. Shown only on this plugin's
+	 * own Global tabs screen and dismissible per user (the close button and the link both store it).
 	 */
 	public function yikes_notice(): void {
 		if ( ! current_user_can( self::CAPABILITY ) ) {
 			return;
 		}
 		$screen = get_current_screen();
-		if ( null === $screen || ! in_array( $screen->id, array( 'plugins', 'edit-product', 'edit-' . GlobalTabs::POST_TYPE ), true ) ) {
+		if ( null === $screen || 'edit-' . GlobalTabs::POST_TYPE !== $screen->id ) {
 			return;
 		}
 		if ( get_user_meta( get_current_user_id(), self::DISMISS_KEY, true ) || (int) get_option( YikesImporter::LAST_RUN, 0 ) > 0 ) {
@@ -412,8 +413,9 @@ final class SettingsPage {
 			return;
 		}
 		$dismiss = wp_nonce_url( add_query_arg( self::DISMISS_KEY, '1' ), self::DISMISS_KEY );
+		wp_enqueue_script( 'pnscripts-product-tabs-notice', PNSCRIPTS_PRODUCT_TABS_URL . 'assets/js/admin-notice.js', array(), PNSCRIPTS_PRODUCT_TABS_VERSION, true );
 		printf(
-			'<div class="notice notice-info"><p>%1$s</p><p><a class="button button-primary" href="%2$s">%3$s</a> <a class="button-link" href="%4$s">%5$s</a></p></div>',
+			'<div class="notice notice-info is-dismissible" data-pnscripts-pt-dismiss="%4$s"><p>%1$s</p><p><a class="button button-primary" href="%2$s">%3$s</a> <a class="button-link" href="%4$s">%5$s</a></p></div>',
 			esc_html__( 'PN Scripts Tabcrest found tabs from Custom Product Tabs for WooCommerce (YIKES). Import them in one click; YIKES data stays untouched.', 'pnscripts-tabcrest' ),
 			esc_url( self::url( 'import' ) ),
 			esc_html__( 'Review the import', 'pnscripts-tabcrest' ),
