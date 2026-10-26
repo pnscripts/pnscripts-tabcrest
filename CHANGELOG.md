@@ -4,11 +4,7 @@ All notable changes to PN Scripts Tabcrest (formerly PN Scripts Product Tabs). F
 
 ## [Unreleased]
 
-Before the first WordPress.org submission (owner):
-
-- WordPress.org account with 2FA; set the real username in `readme.txt` → `Contributors`.
-- Submit the zip from `bin/build-zip.sh` and request the slug `pnscripts-tabcrest` (WordPress.org derives `pn-scripts-tabcrest-custom-product-tabs-faq` from the plugin name otherwise; the slug can only be changed before approval).
-- After approval: upload `assets/screenshots/*.png` (and a banner/icon) to the SVN `assets/` folder.
+Nothing yet. 1.0.5 is live on WordPress.org since 2026-10-26: https://wordpress.org/plugins/pnscripts-tabcrest/ (SVN `trunk`, `tags/1.0.5`, banner, icon and screenshots in `assets/`; art from `bin/wporg-assets.mjs`).
 
 ## [1.0.5] - 2026-10-23
 

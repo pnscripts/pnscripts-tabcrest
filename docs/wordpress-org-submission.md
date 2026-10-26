@@ -1,6 +1,6 @@
 # WordPress.org submission checklist: PN Scripts Tabcrest
 
-Status 2026-10-10: not submitted yet. 1.0.4 renames the plugin to **PN Scripts Tabcrest – Custom Product Tabs & FAQ**, slug and text domain `pnscripts-tabcrest` (1.0.0–1.0.2 on GitHub: "PN Scripts Product Tabs – Custom Tabs & FAQ" / `pnscripts-product-tabs`; the interim 1.0.3 name was never tagged or published). Reasons: the WordPress.org review of a sibling plugin (PN Omnibus, then PN Scripts Pricetrail, now PN Scripts Price History for Discounts) rejected a name close to an existing product and asked for a distinctive leading term; "Product Tabs" collides with an existing plugin, and the 1.0.3 term is also the name of browser tab-manager extensions. "Tabcrest" had no WordPress.org results and no product of that name was found on the web (2026-10-10).
+Status 2026-10-26: **approved 2026-10-25 and live** at https://wordpress.org/plugins/pnscripts-tabcrest/ (1.0.5, SVN r3765569). History: submitted 1.0.4, review 2026-10-17 asked for no bundled translation files and screen-limited dismissible notices (fixed in 1.0.5). The steps below are kept as the record of the first submission.
 
 Form: https://wordpress.org/plugins/developers/add/ (log in first; the account needs 2FA).
 
@@ -37,4 +37,5 @@ Form: https://wordpress.org/plugins/developers/add/ (log in first; the account n
 ## After approval (SVN)
 
 - `trunk/` = contents of the zip folder; `tags/1.0.4/` = copy of trunk.
-- `assets/`: `assets/screenshots/screenshot-1.png` … `screenshot-6.png` from this repo (captions in `readme.txt` → Screenshots). Banner and icon do not exist yet; optional.
+- `assets/`: `assets/screenshots/screenshot-1.png` … `screenshot-6.png` and `assets/wporg/` banner (772x250, 1544x500) and icon (128, 256) from this repo (captions in `readme.txt` → Screenshots; `svn:mime-type image/png` set). Done 2026-10-26 in r3765569.
+- Release: edit `trunk/`, `svn cp trunk tags/X.Y.Z`, update `Stable tag` in both readmes, commit once with the cached `pnscripts` SVN credential.
