@@ -18,7 +18,7 @@ mkdirSync( out, { recursive: true } );
 const browser = await puppeteer.launch( {
 	executablePath: process.env.CHROME || '/usr/bin/google-chrome',
 	headless: true,
-	args: [ '--no-sandbox', '--hide-scrollbars', '--lang=en-US' ],
+	args: [ '--no-sandbox', '--hide-scrollbars', '--mute-audio', '--disable-speech-api', '--lang=en-US' ],
 	defaultViewport: { width: 1280, height: 900, deviceScaleFactor: 1 },
 } );
 const page = await browser.newPage();

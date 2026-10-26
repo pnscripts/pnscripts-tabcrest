@@ -23,6 +23,7 @@ SECURITY.md
 AGENTS.md
 CLAUDE.md
 /assets/screenshots
+/assets/wporg
 /docs
 /languages/*.po
 /languages/*.mo
