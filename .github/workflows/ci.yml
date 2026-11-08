@@ -8,26 +8,49 @@ on:
 permissions:
   contents: read
 
+# A newer push to the same branch or pull request replaces a run still in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
+  # setup-php reads php-version; the matrix used to pass `php`, which it
+  # ignores, so every job ran on its default PHP whatever the name said.
   lint:
     name: WPCS, PHPStan, unit tests (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.1', '8.2', '8.3', '8.4']
+        php: ['8.2', '8.3', '8.4']
     steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
-          php: ${{ matrix.php }}
+          php-version: ${{ matrix.php }}
           tools: composer:v2
           coverage: none
       - run: composer install --no-interaction --no-progress
+      - name: Composer audit
+        if: matrix.php == '8.4'
+        run: composer audit
       - run: find . -path ./vendor -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null
       - run: composer lint
       - run: composer analyse
       - run: composer test
+
+  # The plugin supports PHP 8.1 (Requires PHP), but its development tools need
+  # 8.2, so on 8.1 every shipped PHP file is checked to parse.
+  php81-syntax:
+    name: PHP 8.1 syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.1'
+          coverage: none
+      - run: find src pnscripts-tabcrest.php uninstall.php -name '*.php' -print0 | xargs -0 -n1 php -l
 
   integration:
     name: Integration (WP ${{ matrix.wp }}, WC ${{ matrix.wc }}, PHP ${{ matrix.php }})
@@ -37,12 +60,12 @@ jobs:
       matrix:
         include:
           - { wp: 'latest', wc: 'latest-stable', php: '8.3' }
-          - { wp: '6.5.5', wc: '9.0.2', php: '8.1' }
+          - { wp: '6.5.5', wc: '9.0.2', php: '8.2' } # oldest supported WP and WC; 8.2 is the oldest PHP the test tools install on
     steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
-          php: ${{ matrix.php }}
+          php-version: ${{ matrix.php }}
           extensions: pdo_sqlite, sqlite3, zip
           tools: composer:v2
           coverage: none
@@ -55,8 +78,8 @@ jobs:
     name: Plugin Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: bin/build-zip.sh
-      - uses: wordpress/plugin-check-action@v1
+      - uses: wordpress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e # v1.1.9
         with:
           build-dir: build/pnscripts-tabcrest
